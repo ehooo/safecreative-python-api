@@ -197,6 +197,35 @@ class SafeCreativeAPI:
             self.API_SEARCH_URL = "https://arena.safecreative.org/v2/"
             self.API_SEMANTIC_URL = "https://arena.safecreative.org/semantic-query"
             self.API_AUTH = "https://arena.safecreative.org/api-ui/authkey.edit"
+        self.old_functions = {
+            'readInfo': self.read_info,
+            'toUTF8': self.to_utf8,
+            'getVersion': self.get_version,
+            'getZtime': self.get_ztime,
+            'getAuthkey_create': self.get_authkey_create,
+            'getAuthkey_state': self.get_authkey_state,
+            'getUser_licenses': self.get_user_licenses,
+            'getLicense_features': self.get_license_features,
+            'getUser_countries': self.get_user_countries,
+            'getUser_profiles': self.get_user_profiles,
+            'getWork_types': self.get_work_types,
+            'getWork_types_tree': self.get_work_types_tree,
+            'getWork_languages': self.get_work_languages,
+            'getWork': self.get_work,
+            'getWork_private': self.get_work_private,
+            'getWork_list': self.get_work_list,
+            'getWork_certificate': self.get_work_certificate,
+            'getWork_download_private': self.get_work_download_private,
+            'getWork_rightsholders_add': self.get_work_rightsholders_add,
+            'getWork_rightsholders_list': self.get_work_rightsholders_list,
+            'getWork_rightsholders_remove': self.get_work_rightsholders_remove,
+            'getAuthorization_Url': self.get_authorization_url,
+        }
+
+    def __getattr__(self, key):
+        if key in self.old_functions:
+            return self.old_functions[key]
+        raise AttributeError("%s instance has no attribute '%s'" % (self.__class__, key))
 
     def read_info(self, params, sign=None, url=None, debug=False):
         """
